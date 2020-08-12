@@ -12,8 +12,8 @@ export default () => {
         provider={'google'} // remove if not using Google Maps
         style={{flex: 3}}
         region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: -34.604501,
+          longitude: -58.396222,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}
