@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {TextInput, IconButton, Chip} from 'react-native-paper';
 import {useSearchesValue} from '../api/SearchesContext';
 // import {SearchesContext} from '../api/SearchesContext';
@@ -7,7 +7,7 @@ import {useSearchesValue} from '../api/SearchesContext';
 export default () => {
   const [input, setInput] = useState(null);
 
-  const {switchCurrentCity} = useSearchesValue();
+  const {currentCity, switchCurrentCity} = useSearchesValue();
 
   const fetchWeatherData = (city = 'Buenos Aires') => {
     return fetch(
@@ -16,18 +16,23 @@ export default () => {
       .then((response) => response.json())
       .then((json) => {
         console.log('What is json =====', json);
+        if (json.cod === '404') {
+          return Alert.alert('Please enter a valid city name');
+        }
         switchCurrentCity(json);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   };
 
   return (
     <View
       style={{
+        flex: currentCity.name ? null : 1,
         backgroundColor: 'purple',
-        justifyContent: 'space-around',
+        alignItems: 'center',
+        justifyContent: 'center',
         padding: 24,
       }}>
       {/* {

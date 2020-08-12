@@ -11,7 +11,13 @@ export default () => {
       <View style={{margin: 8}}>
         {/* <Icon name={element.icon}></Icon> */}
         <Text style={{fontSize: 12, color: 'white'}}>{element.label}</Text>
-        <Text style={{fontSize: 24, textAlign: 'center', color: 'white'}}>
+        <Text
+          style={{
+            fontSize: 16,
+            textAlign: 'center',
+            color: 'white',
+            fontWeight: 'bold',
+          }}>
           {main[element.key]}
         </Text>
       </View>
@@ -46,35 +52,39 @@ export default () => {
     },
   ];
 
-  return (
-    <SafeAreaView
-      style={{
-        backgroundColor: 'green',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-      }}>
-      <Text style={{alignSelf: 'center', color: 'white'}}>
-        Weather right now in
-      </Text>
-
-      <Text
+  if (currentCity.name) {
+    return (
+      <SafeAreaView
         style={{
-          fontSize: 20,
-          color: 'white',
-          fontWeight: 'bold',
-          paddingTop: 16,
+          backgroundColor: 'green',
+          alignItems: 'center',
+          justifyContent: 'space-around',
         }}>
-        {name}, {country}
-      </Text>
+        <Text style={{alignSelf: 'center', color: 'white'}}>
+          Weather right now in
+        </Text>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginTop: 16,
-        }}>
-        {weatherSpecifics.map((item) => renderWeatherElement(item))}
-      </View>
-    </SafeAreaView>
-  );
+        <Text
+          style={{
+            fontSize: 20,
+            color: 'white',
+            fontWeight: 'bold',
+            paddingTop: 16,
+          }}>
+          {name}, {country}
+        </Text>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            marginTop: 16,
+          }}>
+          {weatherSpecifics.map((item) => renderWeatherElement(item))}
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  return [];
 };
