@@ -50,16 +50,19 @@ export default () => {
     <SafeAreaView
       style={{
         backgroundColor: 'green',
+        alignItems: 'center',
+        justifyContent: 'space-around',
       }}>
       <Text style={{alignSelf: 'center', color: 'white'}}>
         Weather right now in
       </Text>
+
       <Text
         style={{
           fontSize: 20,
-          alignSelf: 'center',
           color: 'white',
           fontWeight: 'bold',
+          paddingTop: 16,
         }}>
         {name}, {country}
       </Text>
