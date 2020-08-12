@@ -1,14 +1,13 @@
 import React, {useState, useContext} from 'react';
 import {View, Text} from 'react-native';
 import {TextInput, IconButton, Chip} from 'react-native-paper';
+import {useSearchesValue} from '../api/SearchesContext';
 // import {SearchesContext} from '../api/SearchesContext';
 
 export default () => {
   const [input, setInput] = useState(null);
-  // const [state, setState] = useContext(SearchesContext);
 
-  const createSearchRegistry = (newValues) =>
-    setState(() => ({...state, ...newValues.name, ...newValues.main}));
+  const {switchCurrentCity} = useSearchesValue();
 
   const fetchWeatherData = (city = 'Buenos Aires') => {
     return fetch(
@@ -17,7 +16,7 @@ export default () => {
       .then((response) => response.json())
       .then((json) => {
         console.log('What is json =====', json);
-        // createSearchRegistry(json);
+        switchCurrentCity(json);
       })
       .catch((error) => {
         console.error(error);
@@ -36,6 +35,9 @@ export default () => {
         <Text style={{color: 'white'}}>Last search results:</Text>
         // state.map(city => <Chip onPress={() => console.log('Change current city, animateToCoordinate')} onClose={() => console.log("Delete from state")} >{city.name}</Chip>)
       } */}
+      <Text style={{color: 'white', fontWeight: 'bold'}}>
+        Instant weather specifics for any city in the world!
+      </Text>
       <View style={{flexDirection: 'row', padding: 16, alignSelf: 'center'}}>
         <TextInput
           autoCapitalize

@@ -4,14 +4,14 @@ import {List, Icon} from 'react-native-paper';
 import {useSearchesValue} from '../api/SearchesContext';
 
 export default () => {
-  const {name, country, main} = useSearchesValue();
-
+  const {currentCity} = useSearchesValue();
+  const {name, country, main} = currentCity;
   const renderWeatherElement = (element) => {
     return (
       <View style={{margin: 8}}>
         {/* <Icon name={element.icon}></Icon> */}
-        <Text style={{fontSize: 12}}>{element.label}</Text>
-        <Text style={{fontSize: 24, textAlign: 'center'}}>
+        <Text style={{fontSize: 12, color: 'white'}}>{element.label}</Text>
+        <Text style={{fontSize: 24, textAlign: 'center', color: 'white'}}>
           {main[element.key]}
         </Text>
       </View>
@@ -49,10 +49,18 @@ export default () => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: 'orange',
+        backgroundColor: 'green',
       }}>
-      <Text style={{alignSelf: 'center'}}>Weather right now in</Text>
-      <Text style={{fontSize: 20, alignSelf: 'center'}}>
+      <Text style={{alignSelf: 'center', color: 'white'}}>
+        Weather right now in
+      </Text>
+      <Text
+        style={{
+          fontSize: 20,
+          alignSelf: 'center',
+          color: 'white',
+          fontWeight: 'bold',
+        }}>
         {name}, {country}
       </Text>
 
@@ -65,21 +73,5 @@ export default () => {
         {weatherSpecifics.map((item) => renderWeatherElement(item))}
       </View>
     </SafeAreaView>
-
-    //   {/* <View>
-    //     <List.Item
-    //       title="Pressure"
-    //       left={(props) => <List.Icon {...props} icon="" />}
-    //     />
-    //
-    //
-    //   </View> */}
-    //   {/* {
-    //     <Text>
-    //       temperature: 37{'\n'}pressure: 15{'\n'}humidity: 100{'\n'}
-    //       maxTemperature: 120{'\n'}minTemperature: 12
-    //     </Text>
-    //   } */}
-    // </View>
   );
 };
