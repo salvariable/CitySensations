@@ -1,15 +1,23 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import MapView from 'react-native-maps';
 
 export default () => {
   return (
     <View
       style={{
         flex: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
       }}>
-      <Text>Pantalla de mapa</Text>
+      <MapView
+        provider={'google'} // remove if not using Google Maps
+        style={{flex: 3}}
+        region={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
+      />
     </View>
   );
 };

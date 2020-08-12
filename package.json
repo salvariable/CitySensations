@@ -3,15 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "fresh": "watchman watch-del-all && yarn cache clean && rm -rf node_modules && yarn && npx react-native start --reset-cache",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "start": "npx react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-maps": "0.27.1",
     "react-native-paper": "^4.0.1",
     "react-native-vector-icons": "^7.0.0"
   },
