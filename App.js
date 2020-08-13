@@ -9,7 +9,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import DataTopCard from './src/components/DataTopCard';
 import MapScreen from './src/components/MapScreen';
 import FooterSearchBar from './src/components/FooterSearchBar';
@@ -19,7 +19,7 @@ const App = () => {
   return (
     <PaperProvider
       settings={{
-        icon: (props) => <MaterialCommunityIcons {...props} />,
+        icon: (props) => <FontAwesome {...props} />,
       }}>
       <SearchesProvider>
         <View style={styles.container}>

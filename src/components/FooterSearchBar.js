@@ -3,6 +3,7 @@ import {View, Text, Alert} from 'react-native';
 import {TextInput, Chip, IconButton} from 'react-native-paper';
 import {useSearchesValue} from '../api/SearchesContext';
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 export default () => {
   const [input, setInput] = useState(null);
@@ -47,6 +48,7 @@ export default () => {
           country: json.sys.country,
           main: json.main,
           coords: json.coord,
+          created: moment().format(),
         };
 
         switchCurrentCity(cityObject);
@@ -82,7 +84,7 @@ export default () => {
               style={{margin: 4}}
               onPress={() => switchCurrentCity(city)}
               onClose={() => deleteResult(city)}
-              key={() => city.name}>
+              key={city.created}>
               {city.name}
             </Chip>
           ))}

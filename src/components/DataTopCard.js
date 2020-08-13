@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
-import {List, Icon} from 'react-native-paper';
 import {useSearchesValue} from '../api/SearchesContext';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default () => {
   const {currentCity} = useSearchesValue();
   const {name, country, main} = currentCity;
   const renderWeatherElement = (element) => {
     return (
-      <View style={{margin: 8}}>
-        {/* <Icon name={element.icon}></Icon> */}
+      <View style={{margin: 8, alignItems: 'center'}}>
+        <FontAwesome5 name={element.icon} size={24} color={'white'} />
         <Text style={{fontSize: 12, color: 'white'}}>{element.label}</Text>
         <Text
           style={{
