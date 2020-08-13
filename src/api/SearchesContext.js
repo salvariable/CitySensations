@@ -35,7 +35,9 @@ export const SearchesProvider = ({children}) => {
 
   const deleteResult = (target) => {
     return setLastResults((state) => {
-      return state.filter((city) => city !== target);
+      const filteredState = state.filter((city) => city !== target);
+      storeResultsInCache(filteredState);
+      return filteredState;
     });
   };
 

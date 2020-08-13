@@ -74,7 +74,7 @@ export default () => {
         justifyContent: 'center',
         padding: 24,
       }}>
-      {savedResults || lastResults.length ? (
+      {savedResults.length || lastResults.length ? (
         <Text style={{color: 'white'}}>Last search results:</Text>
       ) : null}
       {resultsToBeRendered && (
@@ -105,9 +105,7 @@ export default () => {
           icon="search"
           color="white"
           size={20}
-          onPress={() => {
-            fetchWeatherData(input);
-          }}
+          onPress={() => fetchWeatherData(input)}
         />
       </View>
     </View>
