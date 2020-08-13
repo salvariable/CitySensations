@@ -16,11 +16,16 @@ export default () => {
           provider={'google'}
           style={{flex: 3}}
           region={{
-            latitude: currentCity.coords.lat,
-            longitude: currentCity.coords.lon,
+            latitude: currentCity.coords.lat
+              ? currentCity.coords.lat
+              : currentCity.coords.latitude,
+            longitude: currentCity.coords.lon
+              ? currentCity.coords.lon
+              : currentCity.coords.longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
+          animateCamera={currentCity.coords}
         />
       </View>
     );
