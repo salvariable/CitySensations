@@ -1,13 +1,36 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Alert} from 'react-native';
-import {TextInput, IconButton, Chip} from 'react-native-paper';
+import {TextInput, Chip, IconButton} from 'react-native-paper';
 import {useSearchesValue} from '../api/SearchesContext';
-// import {SearchesContext} from '../api/SearchesContext';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default () => {
   const [input, setInput] = useState(null);
+  const [savedResults, setSavedResults] = useState(null);
 
-  const {currentCity, switchCurrentCity} = useSearchesValue();
+  useEffect(() => {
+    getDataFromCache();
+  }, []);
+
+  const getDataFromCache = async () => {
+    try {
+      const value = await AsyncStorage.getItem('CACHE_RESULTS');
+      if (value) {
+        setSavedResults(JSON.parse(value));
+      }
+    } catch (e) {
+      Alert.alert('There was an error getting the data in cache, beware');
+      console.log('Error in getItem: ', e);
+    }
+  };
+
+  const {
+    currentCity,
+    switchCurrentCity,
+    lastResults,
+    updateResultsTray,
+    deleteResult,
+  } = useSearchesValue();
 
   const fetchWeatherData = (city = 'Buenos Aires') => {
     return fetch(
@@ -15,16 +38,30 @@ export default () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        console.log('What is json =====', json);
         if (json.cod === '404') {
           return Alert.alert('Please enter a valid city name');
         }
-        switchCurrentCity(json);
+
+        const cityObject = {
+          name: json.name,
+          country: json.sys.country,
+          main: json.main,
+          coords: json.coord,
+        };
+
+        switchCurrentCity(cityObject);
+        updateResultsTray(cityObject);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const resultsToBeRendered = lastResults.length
+    ? lastResults
+    : savedResults
+    ? savedResults
+    : null;
 
   return (
     <View
@@ -35,17 +72,28 @@ export default () => {
         justifyContent: 'center',
         padding: 24,
       }}>
-      {/* {
-        // Last search results &&
+      {savedResults || lastResults.length ? (
         <Text style={{color: 'white'}}>Last search results:</Text>
-        // state.map(city => <Chip onPress={() => console.log('Change current city, animateToCoordinate')} onClose={() => console.log("Delete from state")} >{city.name}</Chip>)
-      } */}
+      ) : null}
+      {resultsToBeRendered && (
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {resultsToBeRendered.map((city) => (
+            <Chip
+              style={{margin: 4}}
+              onPress={() => switchCurrentCity(city)}
+              onClose={() => deleteResult(city)}
+              key={() => city.name}>
+              {city.name}
+            </Chip>
+          ))}
+        </View>
+      )}
       <Text style={{color: 'white', fontWeight: 'bold'}}>
         Instant weather specifics for any city in the world!
       </Text>
       <View style={{flexDirection: 'row', padding: 16, alignSelf: 'center'}}>
         <TextInput
-          autoCapitalize
+          autoCapitalize={'words'}
           autoCorrect
           label="Type in the name of a city"
           onChangeText={(text) => setInput(text)}
@@ -53,9 +101,11 @@ export default () => {
         />
         <IconButton
           icon="search"
-          color="green"
-          size={24}
-          onPress={() => fetchWeatherData(input)}
+          color="white"
+          size={20}
+          onPress={() => {
+            fetchWeatherData(input);
+          }}
         />
       </View>
     </View>
