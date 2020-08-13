@@ -15,6 +15,8 @@ target 'CitySensations' do
   pod 'Google-Maps-iOS-Utils'
 
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'CitySensationsTests' do
     inherit! :complete
     # Pods for testing
