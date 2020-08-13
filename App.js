@@ -9,30 +9,17 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DataTopCard from './src/components/DataTopCard';
 import MapScreen from './src/components/MapScreen';
 import FooterSearchBar from './src/components/FooterSearchBar';
 import {SearchesProvider} from './src/api/SearchesContext';
 
 const App = () => {
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'changeTheme':
-        return {
-          ...state,
-          theme: action.newTheme,
-        };
-
-      default:
-        return state;
-    }
-  };
-
   return (
     <PaperProvider
       settings={{
-        icon: (props) => <FontAwesome5 {...props} />,
+        icon: (props) => <MaterialCommunityIcons {...props} />,
       }}>
       <SearchesProvider>
         <View style={styles.container}>
